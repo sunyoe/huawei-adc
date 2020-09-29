@@ -1,0 +1,87 @@
+打开网络
+请记住在这里一定要用清华的镜像源，这是系统的一个bug，不用关心，当然清华的镜像源也出现问题的话也可以试一下其他的
+#1. 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+清华镜像源
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backportss main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backportss main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse
+
+#中科大镜像源
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main multiverse restricted universe
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main multiverse restricted universe
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-proposed main multiverse restricted universe
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main multiverse restricted universe
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main multiverse restricted universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main multiverse restricted universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main multiverse restricted universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-proposed main multiverse restricted universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main multiverse restricted universe
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main multiverse restricted universe
+
+#阿里云镜像源
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+
+  以下参考来自网址 http://wiki.ros.org/melodic/Installation/Ubuntu
+#2.Setup your sources.list
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+#3.Set up your keys
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+#4.Installation
+sudo apt update upgrade
+这里用全面版，它包含了所有可能要用到的各种包和工具，其他的两个版本都是缺斤少两的，需要用到时在自行安装，麻烦，还是一次性安装全比较好
+sudo apt install ros-melodic-desktop-full （全面版）
+sudo apt install ros-melodic-desktop      （桌面版）
+sudo apt install ros-melodic-ros-base     （基础版）
+
+#5.Environment setup
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+#6.To install this tool and other dependencies for building ROS packages
+sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+#7.Initialize rosdep
+sudo apt install python-rosdep
+sudo rosdep init
+rosdep update
+
+#8.启动sshd
+sudo service sshd start
+
+#9.ros创建空间
+mkdir ~/ros_ws
+echo "export ROS_PACKAGE_PATH=/home/pi/ros_ws:${ROS_PACKAGE_PATH}" >> ~/.bashrc
+. ~/.bashrc
+
+#10.安装pybluez     //sudo 
+sudo apt-get install python-pip
+pip install pybluez==0.22 -i https://mirrors.ustc.edu.cn/pypi/web/simple/
+
+#11.安装python-serial
+sudo apt-get install python-serial
+sudo apt-get install ros-melodic-serial
+
+#12.扩大用户权限（ttyUSB0）
+sudo usermod -a -G dialout pi
+
+#13 install playsound
+pip install playsound
+
+
+
